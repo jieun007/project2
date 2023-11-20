@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>join membership page</title>
+  </head>
+  <body>
+    <header class="form-header">
+      <h1>회원 가입 🎈</h1>
+    </header>
+
+    <form class="form-row">
+      <div>
+        <label for="id">ID</label>
+        <input id="id" name="id" type="text" />
+      </div>
+      <div>
+        <label for="pw">Password</label>
+        <input id="pw" name="pw" type="pw" />
+      </div>
+      <div class="month-form-row">
+        <label for="birth_month">생년월일</label>
+        <select name="Month">
+          <option value="january">1월</option>
+          <option value="february">2월</option>
+          <option value="march">3월</option>
+          <option value="april">4월</option>
+          <option value="may">5월</option>
+          <option value="june">6월</option>
+          <option value="july">7월</option>
+          <option value="august">8월</option>
+          <option value="september">9월</option>
+          <option value="october">10월</option>
+          <option value="november">11월</option>
+          <option value="december">12월</option>
+        </select>
+        <input type="text" id="birth_month" />
+      </div>
+      <div>
+        <fieldset class="legacy-form-row">
+          <input
+            id="gender-type-1"
+            name="gender-type"
+            type="radio"
+            value="Male"
+          />
+          <label for="gender-type-1" class="radio-label">남자</label>
+          <input
+            id="gender-type-2"
+            name="gender-type"
+            type="radio"
+            value="Female"
+            checked
+          />
+          <label for="gender-type-2" class="radio-label">여자</label>
+          <input
+            id="gender-type-3"
+            name="gender-type"
+            type="radio"
+            value="None"
+            checked
+          />
+          <label for="gender-type-3" class="radio-label">비공개</label>
+        </fieldset>
+      </div>
+      <div>
+        <label class="checkbox-label" for="available">
+          <input
+            id="available"
+            name="available"
+            type="checkbox"
+            value="is-available"
+          />
+          <span>로봇이 아닙니다.</span>
+        </label>
+      </div>
+      <div>
+        <button>가입하기</button>
+      </div>
+    </form>
+  </body>
+</html>
