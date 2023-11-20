@@ -7,10 +7,32 @@
   </head>
   <body>
     <h1>로그인 페이지</h1>
-    <p>ID : <input type="text" /></p>
-    <p>Password : <input type="text" /></p>
+    <p>ID : <input type="text" placeholder="아이디 입력" /></p>
+    <p>PW : <input type="text" placeholder="비밀번호 입력" /></p>
     <button id="login">로그인</button>
-    <button id="id search">아이디 찾기</button>
-    <button id="pw search">비밀번호 찾기</button>
+    <button id="id_search">아이디 찾기</button>
+    <button id="pw_search">비밀번호 찾기</button>
+    <button id="join">회원 가입</button>
+
+    <!-- JavaScript 코드 -->
+    <script>
+      var id_search = document.getElementById("id_search");
+      var pw_search = document.getElementById("pw_search");
+      var join = document.getElementById("join");
+
+      // 클릭 이벤트에 대한 핸들러를 추가
+      id_search.addEventListener("click", function () {
+        window.location.href = "search_id.html";
+      });
+
+      pw_search.addEventListener("click", function () {
+        window.location.href = "search_pw.html";
+      });
+
+      join.addEventListener("click", function () {
+        window.location.href = "join.html";
+      });
+    </script>
   </body>
 </html>
+
