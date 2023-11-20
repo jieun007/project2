@@ -30,8 +30,8 @@ public class TranController {
 	
     @PostMapping("/t")
     public String a(String original, Model model){
-        String clientId = "k607V4gOwCDBnqr4M2d9";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "rIN95xktTH";//애플리케이션 클라이언트 시크릿값";
+        String clientId = "";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "";//애플리케이션 클라이언트 시크릿값";
         System.out.println(original);
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
         String text;
