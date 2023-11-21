@@ -2,7 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>join membership page</title>
+    <title>회원 가입 페이지</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <style>
+      .interest {
+        margin-top: 10px;
+        overflow-y: auto;
+        max-height: 150px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #888;
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: #eee;
+      }
+    </style>
   </head>
   <body>
     <header class="form-header">
@@ -15,7 +35,7 @@
         <input id="id" name="id" type="text" />
       </div>
       <div>
-        <label for="pw">Password</label>
+        <label for="pw">PW</label>
         <input id="pw" name="pw" type="pw" />
       </div>
       <div class="month-form-row">
@@ -63,19 +83,83 @@
           <label for="gender-type-3" class="radio-label">비공개</label>
         </fieldset>
       </div>
-      <div>
-        <label class="checkbox-label" for="available">
-          <input
-            id="available"
-            name="available"
-            type="checkbox"
-            value="is-available"
-          />
-          <span>로봇이 아닙니다.</span>
-        </label>
+
+      <div class="interest">
+        <label for="interest_area">관심 지역 (최대 3개 선택)</label>
+        <div id="interestCheckboxes"></div>
+        <input id="interest_page" readonly />
+        <button id="select">선택하기</button>
       </div>
       <div>
         <button>가입하기</button>
+
+        <script>
+          const interestAreas = [
+            "도봉구",
+            "강북구",
+            "노원구",
+            "성북구",
+            "은평구",
+            "종로구",
+            "동대문구",
+            "중랑구",
+            "서대문구",
+            "중구",
+            "성동구",
+            "마포구",
+            "용산구",
+            "광진구",
+            "강동구",
+            "송파구",
+            "강남구",
+            "서초구",
+            "동작구",
+            "관악구",
+            "영등포구",
+            "구로구",
+            "양천구",
+            "강서구",
+          ];
+
+          const interestCheckboxesContainer =
+            document.getElementById("interestCheckboxes");
+          interestAreas.forEach((area) => {
+            const checkboxContainer = document.createElement("div");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = area.toLowerCase();
+            checkbox.value = area;
+            const label = document.createElement("label");
+            label.htmlFor = area.toLowerCase();
+            label.textContent = area;
+
+            checkboxContainer.appendChild(checkbox);
+            checkboxContainer.appendChild(label);
+            interestCheckboxesContainer.appendChild(checkboxContainer);
+          });
+
+          const interestPageInput = document.getElementById("interest_page");
+
+          function validateInterest(e) {
+            const checkboxes = interestCheckboxesContainer.querySelectorAll(
+              "input[type=checkbox]:checked"
+            );
+            if (checkboxes.length <= 3) {
+              const selectedInterest = Array.from(checkboxes)
+                .map((checkbox) => checkbox.value)
+                .join(", ");
+              interestPageInput.value = selectedInterest;
+            } else {
+              alert("최대 3개의 관심 지역을 선택할 수 있습니다.");
+            }
+          }
+          $(document).ready(function () {
+            $("button#select").click(function (e) {
+              e.preventDefault();
+              validateInterest();
+            });
+          });
+        </script>
       </div>
     </form>
   </body>
