@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pw search</title>
+  </head>
+  <body>
+    <h1>PW 찾기 페이지</h1>
+    <p>ID : <input type="text" placeholder="아이디 입력" /></p>
+
+    <div class="month-form-row">
+      <label for="birth_month">생년월일</label>
+      <select name="Month">
+        <option value="january">1월</option>
+        <option value="february">2월</option>
+        <option value="march">3월</option>
+        <option value="april">4월</option>
+        <option value="may">5월</option>
+        <option value="june">6월</option>
+        <option value="july">7월</option>
+        <option value="august">8월</option>
+        <option value="september">9월</option>
+        <option value="october">10월</option>
+        <option value="november">11월</option>
+        <option value="december">12월</option>
+      </select>
+      <input type="text" id="birth_month" />
+    </div>
+
+    <div>
+      <fieldset class="legacy-form-row">
+        <input
+          id="gender-type-1"
+          name="gender-type"
+          type="radio"
+          value="Male"
+        />
+        <label for="gender-type-1" class="radio-label">남자</label>
+        <input
+          id="gender-type-2"
+          name="gender-type"
+          type="radio"
+          value="Female"
+          checked
+        />
+        <label for="gender-type-2" class="radio-label">여자</label>
+        <input
+          id="gender-type-3"
+          name="gender-type"
+          type="radio"
+          value="None"
+          checked
+        />
+        <label for="gender-type-3" class="radio-label">비공개</label>
+      </fieldset>
+    </div>
+
+    <button id="id_search2">비밀번호 확인</button>
+    <!-- 팝업창으로 할지 페이지 만들지 의논해봐욧 -->
+  </body>
+</html>
