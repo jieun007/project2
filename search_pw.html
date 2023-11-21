@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pw search</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function alert(mgs) {
+        Swal.fire(mgs);
+      }
+    </script>
   </head>
   <body>
     <h1>PW 찾기 페이지</h1>
@@ -56,7 +62,8 @@
       </fieldset>
     </div>
 
-    <button id="id_search2">비밀번호 확인</button>
-    <!-- 팝업창으로 할지 페이지 만들지 의논해봐욧 -->
+    <button id="id_search2" onclick="alert('비밀번호 : ()');">
+      비밀번호 확인
+    </button>
   </body>
 </html>
