@@ -17,12 +17,17 @@
  	<update id="update" parameterType="com.travel.seoul.vo.UserVO">
  		update tbl_member
  		  	set	
-			 	user_name = #{userID},
+			 	user_ID = #{userID},
 			 	user_password = #{userPassword},
-				user_addr1 = #{userBirth},
-				user_addr2 = #{userSex},
-				user_reg = #{userArea},
+				user_birth = #{userBirth},
+				user_sex = #{userSex},
+				user_area = #{userArea},
 			where 	
 				user_serial = #{userSerial}
  	</update>
+	<select id="selectId" resultType="com.travel.seoul.vo.UserVO">
+		SELECT COUNT(*)
+		  FROM tbl_member
+		 WHERE user_ID = #{userID}
+	</select>
 </mapper>
