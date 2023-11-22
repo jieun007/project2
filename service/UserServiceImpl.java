@@ -41,4 +41,10 @@ public class UserServiceImpl implements UserService{
 		return mapper.update(vo);
 	}
 
+	@Override
+	public boolean selectID(String userID) {
+		System.out.println("아이디 중복 확인");
+		return mapper.selectID(userID);
+	}
+
 }
