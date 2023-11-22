@@ -5,29 +5,29 @@
  <mapper namespace="com.travel.seoul.mapper.UserMapper">
  	<insert id="insert" parameterType="com.travel.seoul.vo.UserVO">
  		insert into tbl_member values
- 		(seq_user_serial.nextval, #{userID},#{userPassword},#{userBirth}, #{userSex},#{userArea})
+ 		(null, #{userID},#{userPassword},#{userAge}, #{userSex},#{userArea})
  	</insert>
  	<select id="list" resultType="com.travel.seoul.vo.UserVO">
  		select * from tbl_member 	
  	</select>
  	
  	<delete id="delete" parameterType="com.travel.seoul.vo.UserVO">
- 		delete from tbl_member where user_serial = #{user_Serial}
+ 		delete from tbl_member where userSerial = #{userSerial}
  	</delete>
  	<update id="update" parameterType="com.travel.seoul.vo.UserVO">
  		update tbl_member
  		  	set	
-			 	user_ID = #{userID},
-			 	user_password = #{userPassword},
-				user_birth = #{userBirth},
-				user_sex = #{userSex},
-				user_area = #{userArea},
+			 	userID = #{userID},
+			 	userPassword = #{userPassword},
+				userAge = #{userAge},
+				userSex = #{userSex},
+				userArea = #{userArea},
 			where 	
-				user_serial = #{userSerial}
+				userSerial = #{userSerial}
  	</update>
-	<select id="selectId" resultType="com.travel.seoul.vo.UserVO">
+ 	<select id="selectId" resultType="com.travel.seoul.vo.UserVO">
 		SELECT COUNT(*)
 		  FROM tbl_member
-		 WHERE user_ID = #{userID}
+		 WHERE userID = #{userID}
 	</select>
 </mapper>
