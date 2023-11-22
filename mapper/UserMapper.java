@@ -9,4 +9,5 @@ public interface UserMapper {
 	List<UserVO> list();
 	int delete(Long userSerial);
 	int update(UserVO vo);
+	boolean selectID(String userID);	//중복 Id 검색
 }
