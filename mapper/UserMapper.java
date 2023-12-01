@@ -9,5 +9,13 @@ public interface UserMapper {
 	List<UserVO> list();
 	int delete(Long userSerial);
 	int update(UserVO vo);
-	boolean selectID(String userID);	//중복 Id 검색
+	UserVO selectID(String id);	//중복 Id 검색
+	UserVO userByIdAndPassword(UserVO vo);
+	//ID 찾기
+	
+	UserVO find_ID(UserVO vo);
+	
+	//PW 찾기
+	UserVO find_PW(UserVO vo);
+	
 }

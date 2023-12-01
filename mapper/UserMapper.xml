@@ -5,7 +5,7 @@
  <mapper namespace="com.travel.seoul.mapper.UserMapper">
  	<insert id="insert" parameterType="com.travel.seoul.vo.UserVO">
  		insert into tbl_member values
- 		(null, #{userID},#{userPassword},#{userAge}, #{userSex},#{userArea})
+ 		(null, #{userName}, #{userID},#{userPassword},#{userAge}, #{userSex},#{userArea1},#{userArea2},#{userArea3})
  	</insert>
  	<select id="list" resultType="com.travel.seoul.vo.UserVO">
  		select * from tbl_member 	
@@ -17,17 +17,55 @@
  	<update id="update" parameterType="com.travel.seoul.vo.UserVO">
  		update tbl_member
  		  	set	
+ 		  		userName = #{userName}
 			 	userID = #{userID},
 			 	userPassword = #{userPassword},
 				userAge = #{userAge},
 				userSex = #{userSex},
-				userArea = #{userArea},
+				userArea1 = #{userArea1},
+				userArea2 = #{userArea2},
+				userArea3 = #{userArea3},
 			where 	
 				userSerial = #{userSerial}
  	</update>
- 	<select id="selectId" resultType="com.travel.seoul.vo.UserVO">
-		SELECT COUNT(*)
+ 	<select id="selectID" parameterType="com.travel.seoul.vo.UserVO"  resultType="com.travel.seoul.vo.UserVO">
+		SELECT *
 		  FROM tbl_member
-		 WHERE userID = #{userID}
+		 WHERE userID = #{id}
 	</select>
+	<select id="find_ID" parameterType="com.travel.seoul.vo.UserVO" resultType="com.travel.seoul.vo.UserVO">
+
+    select
+        *
+    from
+        tbl_member
+    where
+        userName = #{userName}
+    and
+        userAge = #{userAge}
+    and
+        userSex = #{userSex}
+
+	</select>
+	<select id="find_PW" parameterType="com.travel.seoul.vo.UserVO" resultType="com.travel.seoul.vo.UserVO">
+	<![CDATA[
+    select
+        *
+    from
+        tbl_member
+    where
+        userName = #{userName}
+    and
+        userID = #{userID}
+    and
+        userAge = #{userAge}
+    and
+        userSex = #{userSex}
+]]> 
+	</select>
+	<select id="userByIdAndPassword" parameterType="com.travel.seoul.vo.UserVO" resultType="com.travel.seoul.vo.UserVO">
+   
+      select * from tbl_member where userID = #{userID} and userPassword = #{userPassword}
+   
+   </select>
 </mapper>

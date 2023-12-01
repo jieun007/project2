@@ -13,9 +13,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class UserVO {
     private Long userSerial;
+    private String userName;
     private String userID;
     private String userPassword;
-    private String userBirth;
+    private String userAge;
     private String userSex;
-    private String userArea;
+    private String userArea1;
+    private String userArea2;
+    private String userArea3;
+    
 }

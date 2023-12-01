@@ -18,14 +18,14 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void insert(UserVO vo) {
-		System.out.println("서비스에서 추가 : " + vo);
+		System.out.println("서비스에서 로그인 : " + vo);
 		mapper.insert(vo);
 		
 	}
 
 	@Override
 	public List<UserVO> list() {
-		System.out.println("서비스에서 전체 목록 조회");
+		System.out.println("서비스에서 회원가입");
 		return mapper.list();
 	}
 
@@ -40,11 +40,32 @@ public class UserServiceImpl implements UserService{
 		System.out.println("서비스에서 수정 : "+vo);
 		return mapper.update(vo);
 	}
+	@Override
+	public UserVO selectID(String id) {
+		System.out.println("서비스 아이디 중복 확인 : "+id);
+		return mapper.selectID(id);
+	}
 
 	@Override
-	public boolean selectID(String userID) {
-		System.out.println("아이디 중복 확인");
-		return mapper.selectID(userID);
+	public UserVO find_ID(UserVO vo) {
+		System.out.println("서비스 아이디 찾기 : "+vo);
+		return mapper.find_ID(vo);
 	}
+
+	@Override
+	public UserVO find_PW(UserVO vo) {
+		System.out.println("서비스 비밀번호 찾기 : "+vo);
+		return mapper.find_PW(vo);
+	
+	}
+
+	@Override
+	public UserVO userByIdAndPassword(UserVO vo) {
+		System.out.println("서비스 로그인 확인 : " +vo);
+		UserVO result = mapper.userByIdAndPassword(vo);
+	    System.out.println("서비스 로그인 결과 : " + result);
+	    return result;
+	}
+
 
 }
