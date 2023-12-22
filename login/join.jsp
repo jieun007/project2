@@ -117,6 +117,118 @@ uri="http://java.sun.com/jsp/jstl/core"%>
          });
      });
    </script>
+<script>
+
+	$(document).ready(function(){ ///// 전체 추가
+		var formObj=$("form[role='form']")
+		$("button[type='submit']").click(function(e){
+			e.preventDefault()
+			console.log("전송버튼이 눌렸어요")
+			var str=""
+			$(".uploadResult ul li").each(function(idx, obj){
+				console.log("obj: ", obj)
+				var jobj =$(obj)
+				console.dir(jobj) // 나중에 hidden 으로 변경예정
+				str+= "<input type='hidden' name='attachList["+idx+"].fileName' value='"+jobj.data('filename')+"'>"
+				str+= "<input type='hidden' name='attachList["+idx+"].uuid' value='"+jobj.data('uuid')+"'>"
+				str+= "<input type='hidden' name='attachList["+idx+"].uploadPath' value='"+jobj.data('path')+"'>"
+				str+= "<input type='hidden' name='attachList["+idx+"].fileType' value='"+jobj.data('type')+"'>"
+			})
+			console.log("들어와라")
+			console.log(str)
+			formObj.append(str).submit()
+		})
+		
+		//p506
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$")  // 정규 표현식 (Regular Expression)
+		var maxSize = 5242880  //5MB
+		const checkExtension=(fileName, fileSize)=>{
+			if(fileSize >= maxSize) {
+				alert("파일 용량 초과 (제한용량: 5MB)")
+				return false;
+			}
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.")
+				return false;
+			}
+			return true;
+		}
+		
+		//var cloneObj = $(".uploadDiv").clone()
+		$("input[type='file']").change(function(e){ // 파일 업로드 버튼이 선택되면 호출되는 함수
+			var formData = new FormData()
+			var inputFile = $("input[name='uploadFile']")
+			var files = inputFile[0].files // 여러개의 파일을 선택하면 0번 배열에 파일명의 정보가 저장됨
+			console.log(files)
+			$("input[name='fileName']").val(files[0].name)
+			//formData 에 파일 추가
+			for(var i of files) {
+				if(!checkExtension(i.name, i.size)) return false;
+				formData.append("uploadFile", i)
+			}
+			
+			var uploadResult =$(".uploadResult ul")
+			const showUploadedFile=(uploadResultArr)=>{
+				if(!uploadResultArr || uploadResultArr.length ==0) return
+				var str=""
+				$(uploadResultArr).each(function(idx, obj){ //p525
+					if(obj.fileType) { // 이미지가 맞으면 아래 실행
+						var fileCallPath = encodeURIComponent(obj.uploadPath+ "/s_"+obj.uuid+"_"+obj.fileName)
+						var originPath = obj.uploadPath+ "/"+obj.uuid+"_"+obj.fileName
+						originPath = originPath.replace(new RegExp(/\\/g), "/")  // "\\" => "/"  로 대체한다 (global)
+						str+= "<li data-path='"+obj.uploadPath+"'data-uuid='"+obj.uuid+"' data-fileName='"+obj.fileName+"'data-type='"+obj.fileType+"'"
+						str+= "><div><span>"+obj.fileName+"</span><button type='button' data-file=\'"+fileCallPath+"\' data-type='fileType' "
+						str+= "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>"
+						str+= "<img src='/display?fileName=" + fileCallPath +"'></div></li>"
+					} else { // 이미지가 아니면 아래 실행
+						var fileCallPath = encodeURIComponent(obj.uploadPath+ "/"+obj.uuid+"_"+obj.fileName)
+						var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/")
+						str+= "<li data-path='"+obj.uploadPath+"'data-uuid='"+obj.uuid+"' data-fileName='"+obj.fileName+"'data-type='"+obj.fileType+"'"
+						str+= "><div><span>"+obj.fileName+"</span><button type='button' data-file=\'"+fileCallPath+"\' data-type='file' "
+						str+= "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>"
+						str+= "<img src='/resources/img/attach.png'></div></li>"
+					}
+				})
+				uploadResult.append(str)
+			}
+			$.ajax({
+				url: '/uploadAjaxAction',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				dataType: 'json',
+				success: (result)=>{
+					//alert("업로드 성공")
+					console.log("업로드 성공", result)
+					showUploadedFile(result) // 추가2
+					//p521 , 이미지를 계속 반복해서 추가가능
+					//$(".uploadDiv").html(cloneObj.html())
+				}
+			}) // ajax
+		}) // button[type='file'] click
+		$(".uploadResult").on("click","button", function(e) { ///// 변경
+			console.log("이미지 삭제")
+			var targetFile = $(this).data('file')
+			var type= $(this).data('type')
+			console.log(targetFile)
+			var targetLi = $(this).closest("li")
+			
+			$.ajax({
+				url: '/deleteFile',
+				data: {fileName: targetFile, type:type},
+				dataType: 'text',
+				type: 'POST',
+				success: (result)=>{
+					alert(result)
+					targetLi.remove()
+				}
+			}) // ajax
+		}) // uploadResult click
+		
+
+	}) // ready
+</script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <link rel="stylesheet" type="text/css" href="/resources/css/login.css" />
     <link rel="stylesheet" type="text/css" href="/resources/css/agebox.css" />
@@ -242,7 +354,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           <label for="interest_area">관심 지역 (최대 3개 선택)</label>
           <div id="interestCheckboxes"></div>
           </div>
+       
         <div>
+        <div class="face">
+        	<input class="form-control" type="file" name="uploadFile" multiple />
+        	<button type="reset" class="btn btn-default">취소</button>
+        </div>
           <a
             href="#"
             class="btn button"
@@ -255,6 +372,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             가입하기
           </a>
         </div>
+        <input type="hidden" value="" name="fileName"/>
       </form>
     </div>
     <script src="/resources/js/join.js"></script>

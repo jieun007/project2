@@ -31,7 +31,15 @@ pageEncoding="UTF-8"%>
     <nav style="padding:30px;">
       <div id="horizontal-underline"></div>
       <a href="#" id="MainPage">메인</a>
-      <a href="#" id="loginPage">로그인</a>
+      <!-- <a href="#" id="loginPage">로그인</a> -->
+          <c:choose>
+        <c:when test="${empty user}">
+            <a href="#" id="loginPage">로그인</a>
+        </c:when>
+        <c:otherwise>
+            <a href="#" id="logoutPage">로그아웃</a>
+        </c:otherwise>
+    </c:choose>
 <%--       <c:choose> --%>
 <%--       	<c:when test = "${empty user}"></c:when> --%>
 <%--       	<c:otherwise><a href="#" id="logoutPage">로그아웃</a></c:otherwise> --%>
@@ -74,7 +82,7 @@ pageEncoding="UTF-8"%>
       <!-- 한국어, 영어, 일본어만 -->
     </nav>
 
-    <script>
+    <script> 
       $(document).ready(function () {
    	 	$("#MainPage").click(function () {
              // 로그인 페이지로 이동
@@ -84,6 +92,11 @@ pageEncoding="UTF-8"%>
           // 로그인 페이지로 이동
           window.location.href = "/register/login";
         });
+        $("#logoutPage").click(function (e) {
+            e.preventDefault();  // 기본 이벤트(링크 클릭) 방지
+        	//로그아웃
+            window.location.href = "/logout";
+		})
 
         $("#registerPage").click(function () {
           // 회원가입 페이지로 이동
