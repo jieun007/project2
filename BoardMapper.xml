@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.travel.seoul.mapper.BoardMapper">
+	<select id="getBoardList" resultType="com.travel.seoul.vo.BoardVO">
+         select * from board_tbl
+   </select>
+   <select id="getBoardByNum" resultType="com.travel.seoul.vo.BoardVO">
+         select * from board_tbl where num = #{num}
+   </select>
+   <insert id="insert" parameterType="com.travel.seoul.vo.BoardVO">
+      insert into board_tbl(title,content,id,pw ,visitcount) values( #{title},#{content},#{id},#{pw},#{visitcount})
+   </insert>
+   <delete id="delete" parameterType="com.travel.seoul.vo.BoardVO">
+      delete from board_tbl where num=#{num}
+   </delete>
+   <update id="update" parameterType="com.travel.seoul.vo.BoardVO">
+      update board_tbl set title=#{title},content=#{content}, id=#{id}, postdate=now(), visitcount=#{visitcount} where num=#{num}
+   </update>
+   <select id="getNextNum" resultType="int">
+   	select max(num) from  board_tbl
+   </select>
+	<update id="visitCount" parameterType="com.travel.seoul.vo.BoardVO">
+		update board_tbl set visitcount=visitcount+1 where num=#{num}
+	</update>
+
+   <select id="getListPaging" resultType="com.travel.seoul.vo.BoardVO">
+    select * from (
+        select num, title, id, postdate, visitcount  
+        from board_tbl order by num desc) as T1 
+    limit #{skip},#{amount}
+	</select>
+    <select id="getListPaingTotal" resultType="int">
+        select count(*) from board_tbl
+    </select>
+</mapper>
